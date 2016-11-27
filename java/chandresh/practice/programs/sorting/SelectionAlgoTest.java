@@ -83,10 +83,8 @@ public class SelectionAlgoTest {
 	
 	public static void main(String[] args){
 		Integer[] arrInt = {2,5,8,3,6,10, 19, 43,1, 39};
-		String[] arrString = {"A","V","R","B","H","C","T","G"};
 		
 		Comparable<Integer>[] inp1 = arrInt;
-		Comparable<String>[] inp2 = arrString;
 		
 		SelectionAlgo<Integer> obj1 = new SelectionAlgo<Integer>();
 		System.out.println("Largest element is: " + obj1.findKthLargestElement(inp1, 1));
