@@ -3,6 +3,37 @@ package chandresh.practice.programs.sorting;
 import java.util.Random;
 
 class QuickSort<T>{
+	
+	/**
+	 * @param inp
+	 * Modified quick sort if input elements contain duplicate elements.
+	 * 
+	 */
+	public void sortDuplicateValues(Comparable<T>[] inp){
+		if(inp==null || inp.length<2)
+			return;
+		
+		 sortDuplicateValues(inp, 0,1,inp.length-1);
+	}
+
+	private void sortDuplicateValues(Comparable<T>[] inp, int lt, int index, int gt) { // 1,9,9
+		int lo=lt;
+		if(gt<=lt)
+			return;
+		
+		while(index<=gt){ // index =3 , gt = 2, lt=1  2<=2
+			if(inp[lt].compareTo( (T) inp[index])>0){ // inp[1].compareTo(inp[2]  9>9) 
+				exchange(index, lt, inp);
+				index++;lt++;
+			}else if(inp[lt].compareTo( (T) inp[index])<0){
+				exchange(index, gt, inp);
+				gt--;
+			}else
+				index++;
+		}
+		sortDuplicateValues(inp, lo, lo+1, lt-1);
+		sortDuplicateValues(inp, index+1, index+2, inp.length-1);
+	}
 
 	public void sort(Comparable<T>[] inp) {
 		if(inp==null || inp.length<2)
@@ -78,6 +109,8 @@ public class QuickSortTest {
 	public static void main(String[] args){
 		Integer[] arrInt = {2,5,8,3,6,10, 19, 43,1, 39};
 		String[] arrString = {"A","V","R","B","H","C","T","G"};
+		Integer[] dupArrInt = {9,1,9,6};
+		String[] dupArrString = {"A","V","R","A","G","B","H","C","T","G"};
 		
 		Comparable<Integer>[] inp1 = arrInt;
 		Comparable<String>[] inp2 = arrString;
@@ -86,9 +119,11 @@ public class QuickSortTest {
 		QuickSort<String> obj2 = new QuickSort<String>();
 		obj1.sort(inp1);
 		obj2.sort(inp2);
+		obj1.sortDuplicateValues(dupArrInt);
+		obj2.sortDuplicateValues(dupArrString);
 		
-		obj1.display(inp1);
-		obj2.display(inp2);
+		obj1.display(dupArrInt);
+		obj2.display(dupArrString);
 	}
 
 }
