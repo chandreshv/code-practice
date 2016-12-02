@@ -1,4 +1,4 @@
-package chandresh.practice.programs.designPatterns;
+package chandresh.practice.programs.designPatterns.creational;
 
 import java.util.Date;
 
