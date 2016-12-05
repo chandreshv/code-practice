@@ -162,6 +162,27 @@ public class BST<T extends Comparable<T>> {
 		inOrder(node.right);
 	}
 	
+	public int rank(T data){
+		if(data==null){
+			return -1;
+		}
+		
+		return rank(data,root);
+		
+	}
+	
+	private int rank(T data, BST<T>.Node x) {
+		if(x==null)
+			return -1;
+		int cmp = data.compareTo((T) x.data);
+		if(cmp==0)
+			return 1+size(x.left);
+		else if(cmp>0)
+			return 1 + size(x.left) + rank(data,x.right);
+		else
+			return rank(data,x.left);
+	}
+
 	public static void main(String args[]){
 		BST<Integer> bst = new BST<Integer>();
 		bst.insert(36);
@@ -178,9 +199,10 @@ public class BST<T extends Comparable<T>> {
 		bst.display();
 		//bst.delete(50);
 		
-		bst.deleteMin(bst.root);
-		bst.display();
-		System.out.println(bst.min(bst.root).data);
+		//bst.deleteMin(bst.root);
+		//bst.display();
+		//System.out.println(bst.min(bst.root).data);
+		System.out.println(bst.rank(70));
 		
 		//System.out.println(bst.root.count);
 	}
