@@ -73,7 +73,7 @@ class QueueWithMax<T extends Comparable<T>>{
 	}
 }
 
-class Stack<T extends Comparable<T>>{
+class Stack<T>{
 	private StackNode head;
 	class StackNode{
 		private T data;
