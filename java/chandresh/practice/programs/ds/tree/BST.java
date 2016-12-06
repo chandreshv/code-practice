@@ -19,6 +19,10 @@ public class BST<T extends Comparable<T>> {
 		}
 	}
 	//10-2,8,12
+	/**
+	 * @param data
+	 * Insert elements into BST
+	 */
 	public void insert(T data){
 		if(data==null){
 			System.out.println("No data to insert");
@@ -50,6 +54,10 @@ public class BST<T extends Comparable<T>> {
 		}
 	}
 	
+	/**
+	 * @param x
+	 * @return size of any node i.e number of nodes under it 1
+	 */
 	private int size(Node x) {
 		if(x==null)
 			return 0;
@@ -57,6 +65,11 @@ public class BST<T extends Comparable<T>> {
 			return x.count;
 	}
 
+	/**
+	 * @param data
+	 * @return The node corresponding to the data.
+	 * Null otherwise
+	 */
 	public Node search(T data){
 		Node current = this.root;
 		
@@ -71,6 +84,7 @@ public class BST<T extends Comparable<T>> {
 		}
 		return null;
 	}
+	
 	private Node findSuccessor(Node node){
 		Node current = node;
 		if ((current = current.right) != null) {
@@ -135,6 +149,16 @@ public class BST<T extends Comparable<T>> {
 		return min(x.left);
 	}
 	
+	public Node max(Node x){
+		if(x==null)
+			return null;
+		
+		if(x.right==null)
+			return x;
+		
+		return min(x.right);
+	}
+	
 	public Node deleteMin(Node x){
 		if(x.left==null)
 			return x.right;
@@ -183,6 +207,38 @@ public class BST<T extends Comparable<T>> {
 			return rank(data,x.left);
 	}
 
+	
+	public int rangeCount(T lo, T hi){
+		if(lo==null || hi==null || this.root==null){
+			return 0;
+		}
+		
+		return rangeCount(this.root, lo, hi);
+	}
+
+	/**
+	 * @param n
+	 * @param lo
+	 * @param hi
+	 * @return return the number of nodes falling under the provided range (boundaries included)
+	 */
+	private int rangeCount(Node n, T lo, T hi){
+		if(n==null)
+			return 0;
+		int temp=0,leftCount=0,rightCount=0;
+		if(min(n).data.compareTo(lo)>=0 && max(n).data.compareTo(hi)<=0){
+			return n.count;
+		}
+		if(n.data.compareTo(lo)>=0 && n.data.compareTo(hi)<=0)
+			temp++;
+		if(n.data.compareTo(lo)>=0)		
+			leftCount = rangeCount(n.left, lo, hi);
+		if(n.data.compareTo(hi)<=0)
+			rightCount=rangeCount(n.right, lo, hi);
+		
+		return temp+leftCount+rightCount;
+	}
+
 	public static void main(String args[]){
 		BST<Integer> bst = new BST<Integer>();
 		bst.insert(36);
@@ -197,13 +253,15 @@ public class BST<T extends Comparable<T>> {
 		bst.insert(53);
 		bst.insert(54);
 		bst.display();
-		//bst.delete(50);
+		bst.delete(50);
 		
-		//bst.deleteMin(bst.root);
-		//bst.display();
-		//System.out.println(bst.min(bst.root).data);
+		bst.deleteMin(bst.root);
+		bst.display();
+		System.out.println(bst.min(bst.root).data);
 		System.out.println(bst.rank(70));
-		
-		//System.out.println(bst.root.count);
+		System.out.println(bst.rangeCount(25, 55));
+		System.out.println(bst.rangeCount(10, 37));
+		System.out.println(bst.rangeCount(5, 80));
+		System.out.println(bst.root.count);
 	}
 }
